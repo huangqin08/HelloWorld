@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品添加</title>
+</head>
+<body>
+<h3>商品添加</h3>
+<form action="{% url 'goods:add' %}" method="post">
+{% csrf_token %}
+    <p>商品名称：<input type="text" name="gname" placeholder="商品名称"></p>
+    <p>商品价格：<input type="text" name="price" placeholder="商品价格"></p>
+    <p>分类:
+        <select name="type">
+            {% for type in types %}
+                <option value="{{ type.id }}">{{ type.tname }}</option>
+            {% endfor %}
+        </select>
+    </p>
+    <p><input type="submit" value="添加商品"></p>
+</form>
+</body>
+</html>

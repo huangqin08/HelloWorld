@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情页</title>
+</head>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% load staticfiles %}
+<body>
+<p>商品名称：{{ goods.gname }}</p>
+<p>商品分类：{{ goods.type.tname}}</p>
+<p>商品价格：{{ goods.price }}</p>
+<p>商品销量：{{ goods.sale_num }}</p>
+<p>商品库存：{{ goods.store_num }}</p>
+<p>商品收藏量：<span>{{ goods.save_num }}</span>&nbsp&nbsp<img src="{% static 'images/unsave.jpg'%}" width="15" height="15" id="save_icon"></p>
+
+<button id="btn_add">加入购物车</button>
+<button id="btn_show">查看购物车</button>
+
+<script>
+{#    没有页面跳转就是ajax，有页面跳转就是走路由#}
+    $('#save_icon').click(function () {
+        $this = $(this);
+        path = $this.attr('src');
+        list = path.split('/');
+        img_name =list[list.length-1];
+        var flag='';
+        image_path ='';
+        if(img_name == 'save.jpg'){
+            //
+            flag='save';
+            image_path='{% static 'images/unsave.jpg' %}';
+        }else if(img_name == 'unsave.jpg'){
+            //
+            flag='unsave';
+            image_path='{% static 'images/save.jpg' %}';
+        }
+            $.getJSON('{% url 'goods:save_goods'%}',{'id':{{ goods.id }},'flag':flag},function (data) {
+                if(data.msg == 'success'){
+                    {#console.log(data);#}
+                    $this.attr('src',image_path);
+                    $this.prev().text(data.number);
+                    {#alert('收藏成功！')#}
+                }
+            });
+    });
+
+    $('#btn_add').click(function () {
+        $.getJSON('{% url 'goods:add_cart' %}',{'id':{{goods.id}}},function (data) {
+            if(data.msg == 'success'){
+                console.log(data);
+                alert('添加购物车成功！')
+            }
+        })
+    });
+
+    $('#btn_show').click(function () {
+        location.href='{% url 'goods:show_cart' %}'
+    });
+</script>
+</body>
+</html>

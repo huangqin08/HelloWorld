@@ -1,0 +1,70 @@
+{#<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>#}
+{#<%@ page  import="com.servlet.UserServlet" %>#}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册页面</title>
+    <link href="{% static 'css/register.css' %}" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 注册页面左图 -->
+        <div class="left"></div>
+        <!-- 注册栏 -->
+        <div class="right">
+            <div class="reg-label">
+                <label>用 户 注 册</label>
+                <hr>
+            </div>
+            <div class="reg-box">
+                <form action="{% url 'user:register' %}" id="formId" class="reg-form" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <tr>
+                            <td><input type="text" name="Username" id="InputUsernam" placeholder="用户名" οnblur="InputUsernamBlur()"></td>
+                            <td><label id="errorName"></label></td>
+                        </tr>
+                    </div>
+                    <div>
+                        <tr>
+                            <td><input type="password" name="Password" id="InputPassword" placeholder="密码" οnblur="InputPasswordBlur()"></td>
+                            <td><label id="errorPassword"></label></td>
+                        </tr>
+                    </div>
+                    <div>
+                        <tr>
+                            <td><input type="password" name="Repassword" id="InputRepassword" placeholder="确认密码" οnblur="InputRepasswordBlur()"></td>
+                            <td><label id="errorRepassword"></label></td>
+                        </tr>
+                    </div>
+                    <div>
+                        <tr>
+                            <td><input type="email" name="E-mail" id="InputEmail" placeholder="电子邮箱" οnblur="InputEmailBlur()"></td>
+                            <td><label id="errorEmail"></label></td>
+                        </tr>
+                    </div>
+                    <div>
+                        <tr>
+                            <td><input type="Phone" name="Phone" id="InputPhone" placeholder="手机号码" οnblur="InputPhoneBlur()"></td>
+                            <td><label id="errorPhone"></label></td>
+                        </tr>
+                    </div>
+                </form>
+                    <div class="reg-sub">
+                        <input id="submitButton" type="button" click="checkForm()" value="免费注册" style="color: cyan">
+                    </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <label>© 北京大学星卓学院 计算机学院 ｜ 软件工程</label>
+        </div>
+    </div>
+    <!-- regist.js -->
+    <script type="text/javascript" charset="UTF-8" src="{% static 'js/register.js' %}"></script>
+</body>
+</html>

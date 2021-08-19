@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+    用户登录
+{% endblock %}
+{% block content %}
+    <span>{{ mag }}</span>
+    <form class="form-horizontal" action="{% url 'goods:login' %}" method="post">
+        {% csrf_token %}
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+        <div class="col-sm-4">
+          <input type="email" class="form-control" id="inputEmail3" placeholder="Email" name="email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-4">
+          <input type="password" class="form-control" id="inputPassword3" placeholder="Password" name="password">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" class="btn btn-info">登录</button>
+        </div>
+      </div>
+    </form>
+{% endblock %}

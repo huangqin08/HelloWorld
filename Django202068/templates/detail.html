@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+    用户详情页面
+{% endblock %}
+{% block mycss %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container" id="box">
+        头像：<img src="{% static 'images/test123.png' %}" alt="..." class="img-circle">
+        <br>
+        邮箱：{{ user.email }}
+    </div>
+{% endblock %}

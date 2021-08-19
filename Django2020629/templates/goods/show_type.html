@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品分类展示页</title>
+</head>
+<body>
+<h3>商城所有分类如下：</h3>
+<table border="1" width="60%">
+    <tr>
+        <td>序号</td>
+        <td>商品分类名称</td>
+        <td>创建时间</td>
+        <td>操作</td>
+    </tr>
+         {% for type in types %}
+             <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'goods:goods_show' type.id %}" name="tid">{{ type.tname }}</a></td>
+                <td>{{ type.add_time }}</td>
+                <td><a href="{% url 'goods:type_delete' type.id %}">删除分类 </a></td>
+             </tr>
+        {% endfor %}
+</table>
+</body>
+</html>

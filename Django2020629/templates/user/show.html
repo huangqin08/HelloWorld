@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1" width="60%">
+    <tr>
+        <td>序号</td>
+        <td>用户名</td>
+        <td>真实姓名</td>
+        <td>手机号码</td>
+        <td>城市</td>
+        <td>操作</td>
+    </tr>
+    {% for user in users %}
+        <td>{{ forloop.counter }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.userprofile.realname }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.userprofile.address }}</td>
+        <td><a href="{% url 'user:delete' user.id %}">删除</a></td>
+    {% endfor %}
+
+</table>
+</body>
+</html>

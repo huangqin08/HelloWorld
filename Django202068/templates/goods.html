@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+<br>
+欢迎{{ name }}!   当前时间为：{{ dtime }}
+<hr>
+电影评分：{{ score }}分！
+<hr>
+我最喜欢的电影：{{ movies.0 }}
+<hr>
+{# 遍历列表#}
+<h2>最近上演的电影：</h2>
+<ul>
+{% for movie in movies %}
+    <li> {{movie}}</li>
+    {% endfor %}
+</ul>
+<hr>
+最喜欢的男明星：{{ stars.boy }}
+最喜欢的女明星：{{ stars.girl }}
+<hr>
+最近上映最火的电影：《{{ movie.name }}》{{ movie.director }}
+<hr>
+</body>
+</html>

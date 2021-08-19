@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+    用户登录
+{% endblock %}
+{% block content %}
+    {% if meg %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"></span></button>
+            <strong>{{ meg }}</strong>
+        </div>
+    {% endif %}
+    <form class="form-horizontal" action="{% url 'user:login' %}" method="post">
+        {% csrf_token %}
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" placeholder="username" name="username">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+        <div class="col-sm-4">
+          <input type="password" class="form-control" placeholder="Password" name="password">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+          <button type="submit" class="btn btn-info">用户登录</button>
+        </div>
+      </div>
+    </form>
+{% endblock %}

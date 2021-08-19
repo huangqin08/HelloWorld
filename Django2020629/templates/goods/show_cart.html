@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>购物车</title>
+</head>
+<body>
+<h3>{{ user.username }}的购物车商品如下：</h3>
+<table border="1" cellspacing="0">
+    <tr>
+        <td>序号</td>
+        <td>商品名称</td>
+        <td>商品价格</td>
+        <td>数量</td>
+        <td>操作</td>
+    </tr>
+         {% for goods in user.goods_set.all %}
+             <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ goods.gname }}</td>
+                <td>{{ goods.price }}</td>
+                <td>1</td>
+                <td><a href="{% url 'goods:remove_cart'%}?id={{ goods.id }}">删除</a></td>
+             </tr>
+            {% empty %}
+             还没有添加商品，赶快去添加吧！
+        {% endfor %}
+</table>
+</body>
+</html>

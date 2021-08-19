@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品展示页</title>
+</head>
+<body>
+<h3>{{ type.tname }}分类下的商品展示页</h3>
+<table border="1" width="30%">
+    <tr>
+        <td>序号</td>
+        <td>商品名称</td>
+        <td>商品价格</td>
+    </tr>
+         {% for goods in type.goods_set.all %}
+             <tr>
+                <td>{{ forloop.counter }}</td>
+                <td><a href="{% url 'goods:goods_detail' goods.id %}" name="gid" >{{ goods.gname }}</a></td>
+                <td>{{ goods.price }}</td>
+             </tr>
+            {% empty %}
+             还没有添加商品，赶快去添加吧！
+        {% endfor %}
+</table>
+</body>
+</html>

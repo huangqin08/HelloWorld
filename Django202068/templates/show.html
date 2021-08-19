@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+    所有用户信息
+{% endblock %}
+{% block content %}
+    <table border="1">
+       <tr>
+         <th>序号</th>
+         <th>邮箱</th>
+         <th>密码</th>
+         <th>操作</th>
+       </tr>
+       {% for user in users %}
+           <tr>
+             <td>{{ forloop.counter }}</td>
+             <td>{{ user.email }}</td>
+             <td>{{ user.password }}</td>
+             <td><a href="/goods/delete_user?user_id={{ forloop.counter }}">删除</a><a href="">更新</a></td>
+           </tr>
+       {% endfor %}
+    </table>
+{% endblock %}

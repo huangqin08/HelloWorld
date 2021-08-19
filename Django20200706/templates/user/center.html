@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+    用户中心
+{% endblock %}
+
+{% block content %}
+<h3>用户中心</h3>
+        <div>
+            <ul>
+                <li><span>用户名：</span>{{ user.username }}</li>
+                <li><span>联系方式：</span>{{ user.phone }}</li>
+                <li><span>联系地址：</span>北京市昌平区</li>
+                <li><span>用户头像：</span><img src="{{ MEDIA_URL }}{{ user.icon }}" alt="" id="user_icon" style="width: 30px">
+                    <input type="button" value="修改头像" onclick='javascript:$("#hiddenFile").click();'>
+                    {% csrf_token %}
+                    <input id="hiddenFile" type="file" style="display: none" onchange="change_icon();">
+                </li>
+            </ul>
+{#            {% autoescape off %}#}
+        <p>{{ msg }}</p>
+{#        {% endautoescape %}#}
+        </div>
+
+{% endblock %}
+
+{% block myjs %}
+    <script>
+        function change_icon(){
+            //构建form表单
+            var form = new FormData();
+            form.append('uid',{{ user.id }});
+            form.append('icon',$('#hiddenFile')[0].files[0]);
+            csrf =$('input[name="csrfmiddlewaretoken"]').val();
+            form.append('csrfmiddlewaretoken',csrf);
+
+            $.ajax({
+                url:'{% url 'user:modify_icon' %}',
+                type:'POST',
+                dataType:'json',
+                data:form,
+                contentType:false,
+                processData:false,
+                success:function(data){
+                    console.log('---->'+data);
+                    if(data.msg=='ok'){
+                        $('#user_icon').attr('src','{{ MEDIA_URL }}'+data.image);
+                    }
+                },
+                error:function(data){
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+{% endblock %}

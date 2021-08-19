@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板标签Tag</title>
+</head>
+{% autoescape on %}
+<body>
+
+    {{ mag |safe}}
+    <ul>
+        {% for movie in movies %}
+            <li>{{ forloop.counter }}-{{ movie }}</li>
+        {% empty %}
+            <li>还没有你喜欢的电影.</li>
+        {% endfor %}
+    </ul>
+    {{ mag }}
+    <br>
+<table border="1" width="60%">
+    {% for movie1 in movies %}
+    <tr>
+     {% for movie2 in movies %}
+        <td>
+        {{ forloop.counter }}-{{ forloop.parentloop.counter0 }}-{{ movie1 }}
+        </td>
+     {% endfor %}
+    </tr>
+    {% endfor %}
+
+</table>
+
+
+</body>
+{% endautoescape %}
+</html>
