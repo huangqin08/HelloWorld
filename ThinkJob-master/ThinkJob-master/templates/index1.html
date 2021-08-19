@@ -1,0 +1,44 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+</head>
+<body>
+<input type="button" value="按钮" id="aaaa">
+<input type="file" id="file" name="files" value="" multiple=true>
+</body>
+<script type="text/javascript">
+$("#aaaa").click(function(){
+    var formData = new FormData();
+        var file = $('#file')[0].files
+         formData.append("uid","823e8deedd2a11eaae6a185680724ca4");
+        console.log(file)
+    
+
+        for (var i=0;i<file.length;i++){
+            formData.append("files",file[i]);
+        }
+
+
+         $.ajax({
+             url: "http://127.0.0.1:8000/userhr/resume_update",
+             type: 'POST',
+             data: formData,
+             async: false,
+             cache: false,
+             contentType: false,
+             processData: false,
+             success: function (returnInfo) {
+                console.log(returnInfo)
+             },
+             error: function (returnInfo) {
+                 //上传失败时显示上传失败信息
+                 //document.getElementById('uploadInfo').innerHTML = "<span style='color:Red'>" + returnInfo + "</span>";
+             }
+         });
+});
+</script>
+</html>

@@ -1,0 +1,85 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <script src="{% static 'jquery-1.4.1.min.js' %}"></script>
+    <script src="{% static 'jquery.media.js' %}"></script>
+</head>
+<body>
+<input type="button" value="按钮1" id="aaaa">
+<input type="button" value="按钮2" id="aaaa2">
+<iframe src="{% static 'aa.pdf' %}" id="a" width="30%" height="50%" hspace="100" vspace="100" marginheight="100" marginwidth="100" scrolling="no" frameborder="0" allowtransparency="yes" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"></iframe>
+</body>
+<script type="text/javascript">
+
+function getCookie(name) { 
+	console.log('getCookie,调用了')
+    var cookieValue = null; 
+    if (document.cookie && document.cookie != '') { 
+        var cookies = document.cookie.split(';'); 
+        for (var i = 0; i < cookies.length; i++) { 
+            var cookie = jQuery.trim(cookies[i]); 
+            // Does this cookie string begin with the name we want? 
+            if (cookie.substring(0, name.length + 1) == (name + '=')) { 
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1)); 
+                break; 
+            } 
+        } 
+    }
+	console.log('getCookie,调用了'+cookieValue)
+    return cookieValue; 
+} 
+var csrftoken = getCookie('csrftoken'); 
+   
+function csrfSafeMethod(method) { 
+	console.log('csrfSafeMethod,调用了')
+	console.log(/^(GET|HEAD|OPTIONS|TRACE)$/.test(method))
+    // these HTTP methods do not require CSRF protection 
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method)); 
+} 
+
+
+$("#aaaa").click(function(){
+	$.ajax({
+		url:"http://127.0.0.1:8000/userhr/token",
+		type:"GET",
+		beforeSend: function(xhr, settings) {
+			console.log(csrftoken)
+			if (!csrfSafeMethod(settings.type)) { 
+				xhr.setRequestHeader("X-CSRFToken", csrftoken); 
+			} 
+		},
+		success:function(data){
+			console.log('------->'+data)
+		}
+	})
+});
+
+$("#aaaa2").click(function(){
+	$.ajaxSetup({ 
+		crossDomain: false, // obviates need for sameOrigin test 
+		beforeSend: function(xhr, settings) { 
+			if (!csrfSafeMethod(settings.type)) {
+				console.log('111111111111111111')
+				xhr.setRequestHeader("X-CSRFToken",csrftoken);
+			} 
+		} 
+	});
+	$.ajax({
+		url:"http://127.0.0.1:8000/userhr/user_login",
+		type:"POST",
+		contentType:"application/json",
+		data:{phone:"18601981564",user_pwd:"123123123"},
+		dataType:"json",
+		success:function(data){
+			console.log(data)
+		}
+	});
+});
+
+
+
+</script>
+</html>

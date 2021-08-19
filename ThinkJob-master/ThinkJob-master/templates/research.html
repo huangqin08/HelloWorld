@@ -1,0 +1,1591 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Thinkjob平台大数据中心</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}"/>
+    <link rel="stylesheet" href="{% static 'font/iconfont.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/research.css' %}"/>
+    <style>
+        .header_img {
+            background: url("{% static 'images/header.png' %}") center no-repeat;
+        }
+
+        .header_bottom .caption_nav {
+            color: #abeeff;
+            background: url("{% static 'images/nav_sel.png' %}") center no-repeat;
+        }
+
+        .con_table_th span:nth-child(1) {
+            margin-right: 10px;
+            width: 13px;
+            height: 22px;
+            background: url("{% static 'images/3_03.png' %}");
+            background-size: cover;
+        }
+
+        .con_table_th span:nth-child(3) {
+            width: 10px;
+            height: 19px;
+            background: url("{% static 'images/4_03.png' %}");
+            background-size: cover;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="main">
+    <header>
+        <div class="header header_img">
+            <div class="header_time"></div>
+            <div class="header_title">Thinkjob平台大数据中心</div>
+            <div class="header_search">
+                <p class="header_search_ipt">
+                    <input type="text" id="search_time" value="{{ time }}"/>
+                    <span class="iconfont" onclick="searche()">&#xe605;</span>
+                </p>
+            </div>
+        </div>
+        <div class="header_under"></div>
+        <div class="header_bottom">
+            <div class="hader_caption"></div>
+            <div class="hader_caption">
+                <div class="hader_caption"></div>
+            </div>
+            <div class="hader_caption_empty"></div>
+            <div class="hader_caption">
+                <div class="hader_caption"></div>
+            </div>
+            <div class="hader_caption">
+                <div class="hader_caption"></div>
+            </div>
+        </div>
+    </header>
+    <div class="content">
+        <div class="con_nav">
+            <div class="menu">
+{#                <span class="iconfont">&#xe62a;</span>#}
+            </div>
+            <div class="menu_nav"></div>
+        </div>
+        <div class="con">
+            <div class="res_left">
+                <div class="res_left_gh">
+                    <div class="con_table_th">
+                        <span></span>
+                        <p>今日客服数据</p>
+                        <span></span>
+                    </div>
+                    <div class="con_gh_bottom">
+                        <div class="gh_money">
+                            <div class="gh_top_title">前置审核率</div>
+                            <div id="ghMoney"></div>
+                            <div class="gh_bottom_title">{{ opt_success }}条</div>
+                        </div>
+                        <div class="gh_project">
+                            <div class="gh_top_title">简历审核率</div>
+                            <div id="ghProject"></div>
+                            <div class="gh_bottom_title">{{ audited_resume }}条</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="res_left_jh">
+                    <div class="con_table_th">
+                        <span></span>
+                        <p>点击量排名企业</p>
+                        <span></span>
+                    </div>
+                    <div style="height: 200px; overflow-y: scroll">
+                        {% for i in company_rankings %}
+                            <div class="con_jh_title">
+                                {{ i.company_name }}---浏览 ：{{ i.check_resume_num }}条
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="res_left_ky">
+                    <div class="con_table_th">
+                        <span></span>
+                        <p>今日入库有效简历</p>
+                        <span></span>
+                    </div>
+                    <div class="ky_con">
+                        <div class="ky_con_project">
+                            <div class="ky_project_ul">
+                                <ul>
+                                    <li>JAVA工程师</li>
+                                    <li>{{ today_java_resume | default:0 }}条</li>
+                                    <li>前端工程师</li>
+                                    <li>{{ today_web_resume | default:0 }}条</li>
+                                    <li>Android</li>
+                                    <li>{{ today_android_resume_resume | default:0 }}条</li>
+                                    <li>项目经理</li>
+                                    <li>{{ today_PM_resume_resume | default:0 }}条</li>
+                                </ul>
+                                <ul>
+                                    <li>IOS工程师</li>
+                                    <li>{{ today_ios_resume | default:0 }}条</li>
+                                    <li>UI设计师</li>
+                                    <li>{{ today_ui_resume | default:0 }}条</li>
+                                    <li>测试工程师</li>
+                                    <li>{{ today_test_resume | default:0 }}条</li>
+                                    <li>未知职位</li>
+                                    <li>{{ today_NULL_resume | default:0 }}条</li>
+                                </ul>
+                                <ul>
+                                    <li>运维工程师</li>
+                                    <li>{{ today_linux_resume | default:0 }}条</li>
+                                    <li>PHP工程师</li>
+                                    <li>{{ today_php_resume | default:0 }}条</li>
+                                    <li>Python</li>
+                                    <li>{{ today_python_resume | default:0 }}条</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="res_left_dg">
+                    <div class="con_table_th">
+                        <span></span>
+                        <p>本周新增HR用户</p>
+                        <span></span>
+                    </div>
+
+                    <div class="dg_con">
+                        <div
+                                class="con_dg_item"
+                                style="display: flex; flex-direction: column"
+                        >
+                            {% for i in company_name %}
+                                <div>
+                                    <p>{{ i }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="con_dg_test">
+                            <div class="dg_test_table">
+                                <div id="dgTestTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="res_middle">
+                <div class="res_middle_nav">
+                    <ul>
+                        <li>
+                            <p>总简历数</p>
+                            <p>{{ resume_sum }}</p>
+                        </li>
+                        <li>
+                            <p>后台开发</p>
+                            <p>{{ backend_developers }}</p>
+                        </li>
+                        <li>
+                            <p>前台开发</p>
+                            <p>{{ frontend_developers }}</p>
+                        </li>
+                        <li>
+                            <p>移动端开发</p>
+                            <p>{{ mobile_developers }}</p>
+                        </li>
+                        <li>
+                            <p>其他类型</p>
+                            <p>{{ other_developers }}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="res_map">
+                    <div id="armyMap"></div>
+                    <div class="army_map_num">
+                        <div class="army_map_list">
+                            <div class="army_list_left">
+                                <diev class="army_title">简历上传TOP5排行</diev>
+                                <div class="army_con">
+                                    <div class="army_con_title">
+                                        <p>今日上传总量</p>
+                                    </div>
+                                    <div class="army_con_num">
+                                        <p>{{ today_update_resume_num }}</p>
+                                    </div>
+                                    <div class="army_con_title"></div>
+                                </div>
+                            </div>
+                            <div class="army_list_table">
+                                <span class="close">X</span>
+                                <div id="armyTable"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="res_right">
+                <div class="res_left_gh">
+                    <div class="con_table_th">
+                        <span></span>
+                        <p>简历下载TOP5排行</p>
+                        <span></span>
+                    </div>
+                    <div class="con_gh_bottom">
+                        <div class="con_gh_table">
+                            <div id="ghTable"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="res_right_fly">
+                    <div class="con_table_th">
+                        <span></span>
+                        <p>移动端数据更新率（周）</p>
+                        <span></span>
+                    </div>
+                    <div class="con_fly_progress">
+                        
+
+                        <div class="progress">
+                            <div class="prolist">
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                                <div class="proli"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="con_fly_bottom">
+                        <div class="con_fly_msg">
+                            <div>岗位更新率（周）</div>
+                            <div class="fly_msg_con">
+                                <div id="flyLeftNum"></div>
+                            </div>
+                        </div>
+                        <div class="con_fly_table">
+                            <div>用户回访率（周）</div>
+                            <div class="fly_msg_con">
+                                <div id="flyRightNum"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="res_right_aviation">
+                    
+                    <div class="con_gh_bottom">
+                        <div class="con_gh_msg">
+                            <div>新用户增长率（周）</div>
+                            <div class="gh_msg_con">
+                                <div id="aviation"></div>
+                            </div>
+                        </div>
+                        <div class="con_gh_table">
+                            <div>新用户增长数（周）</div>
+                            <div class="gh_msg_con">
+                                <ul>
+                                    <li>123/名</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="res_right_people">
+                    <div class="con_table_th">
+                        <span></span>
+                        <p>企业与人才数据</p>
+                        <span></span>
+                    </div>
+                    <div class="con_gh_bottom">
+                        <div class="con_gh_msg">
+                            <div class="aviation_title">
+                                <p>最新入驻企业</p>
+                            </div>
+                            <ul>
+                                <li>北京无极限科技有限公司</li>
+			                    <li>北京祥云创想科技有限公司</li>
+			                    <li>北京云上科技有限公司</li>
+			                    <li>北京祥云智能科技有限公司</li>
+			                    <li>北京未来科创技术有限公司</li>
+                            </ul>
+                        </div>
+                        <div class="con_gh_table">
+                            <div id="peopleEducationBg"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/webview.js' %}"></script>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/echarts.min.js' %}"></script>
+<script src="{% static 'js/echarts-liquidfill.min.js' %}"></script>
+<script src="{% static 'js/swiper.js' %}"></script>
+<script src="{% static 'js/china.js' %}"></script>
+<script src="{% static 'js/refreshdata.js' %}"></script>
+<script>
+    $(function () {
+        setInterval(function () {
+            window.location.reload();
+        }, 60*1000*5);
+    });
+
+    function searche(){
+        var time = $('#search_time').val()
+        location.href = 'data_statistics?time=' + time
+    }
+
+    function fnW(str) {
+        var num;
+        str >= 10 ? (num = str) : (num = "0" + str);
+        return num;
+    }
+
+    //获取当前时间
+    var timer = setInterval(function () {
+        var date = new Date();
+        var dateTime =
+            date.getFullYear() +
+            "年" +
+            (date.getMonth() + 1) +
+            "月" +
+            date.getDate() + "日" +
+            "&nbsp;&nbsp;&nbsp;&nbsp;" +
+            fnW(date.getHours()) +
+            ":" +
+            fnW(date.getMinutes()) +
+            ":" +
+            fnW(date.getSeconds());
+        $(".header_time").html(dateTime);
+    }, 1000);
+
+    let ghMoney = echarts.init(document.getElementById("ghMoney"));
+    var assistdata = [];
+    for (let i = 0; i < 23; i++) {
+        //这里可以通过更改数值进行设置格子宽度，数值越小格子越宽
+        assistdata.push({
+            name: "1",
+            value: 1,
+        });
+    }
+    var ghMoneyOption = {
+        color: ["#00101d", "#FF8033"],
+        legend: {
+            orient: "vertical",
+            x: "left",
+            show: false,
+        },
+        tooltip: {
+            trigger: "item",
+            formatter: "{d}%",
+            show: false,
+        },
+        graphic: [
+            {
+                type: "text",
+                left: "center",
+                top: "200px",
+                z: 2,
+                zlevel: 100,
+                style: {
+                    fill: "#6AC5FC",
+                    font: "bold 14px Microsoft YaHei",
+                    fontSize: "30px",
+                },
+            },
+            {
+                type: "text",
+                // position: 'center',
+                left: "center",
+                top: "center",
+                // top: (this.width > 603) ? (this.width > 700 ? '80px' : '52px') : '52px',
+                z: 2,
+                zlevel: 100,
+                style: {
+                    text: {{ opt_passing_rate }} + "%",
+                    fill: "#fff",
+                    fontWeight: 600,
+                    fontSize: 18,
+                },
+            },
+        ],
+        series: [
+            {
+                type: "pie", //环形图的type和饼图相同
+                radius: ["77%", "80%"], //饼图的半径，第一个为内半径，第二个为外半径
+                center: ["50%", "50%"],
+                // color: [],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "20",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {
+                        name: "未使用",
+                        value: 100,
+                        itemStyle: {
+                            color: "#274781",
+                        },
+                    },
+                ],
+            },
+            {
+                type: "pie",
+                silent: true,
+                radius:
+                    this.width > 603
+                        ? this.width > 700
+                        ? ["56%", "70%"]
+                        : ["66%", "85%"]
+                        : ["45%", "65%"],
+                center:
+                    this.width > 603
+                        ? this.width > 700
+                        ? ["50%", "45%"]
+                        : ["50%", "50%"]
+                        : ["50%", "50%"],
+                avoidLabelOverlap: false,
+                color: ["#176da9"],
+                hoverAnimation: false,
+                label: {
+                    show: false,
+                },
+                labelLine: {
+                    show: false,
+                },
+                itemStyle: {
+                    show: false,
+                    borderColor: "#020819",
+                    borderWidth: this.width > 760 ? 4 : 2,
+                },
+                data: assistdata,
+            },
+            {
+                name: "百分比",
+                type: "pie",
+                silent: true,
+                radius:
+                    this.width > 603
+                        ? this.width > 700
+                        ? ["56%", "70%"]
+                        : ["66%", "85%"]
+                        : ["45%", "65%"],
+                center:
+                    this.width > 603
+                        ? this.width > 700
+                        ? ["50%", "45%"]
+                        : ["50%", "50%"]
+                        : ["50%", "50%"],
+                avoidLabelOverlap: false,
+                color: ["transparent", "#020819"],
+                hoverAnimation: false,
+                label: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {
+                        name: "使用",
+                        value: {{ opt_passing_rate }},
+                    },
+                    {
+                        name: "未使用",
+                        value: 100 - {{ opt_passing_rate }},
+                    },
+                ],
+            },
+        ],
+    };
+
+    ghMoney.setOption(ghMoneyOption);
+
+    let ghProject = echarts.init(document.getElementById("ghProject"));
+
+    var ghProjectOption = {
+        color: ["#00101d", "#FF8033"],
+        graphic: [
+            {
+                type: "text",
+                left: "center",
+                top: "200px",
+                z: 2,
+                zlevel: 100,
+                style: {
+                    fill: "#6AC5FC",
+                    font: "bold 14px Microsoft YaHei",
+                    fontSize: "30px",
+                },
+            },
+            {
+                type: "text",
+                left: "center",
+                top: "center",
+                z: 2,
+                zlevel: 100,
+                style: {
+                    text: {{ audited_passing_resume }} + "%",
+                    fill: "#fff",
+                    fontWeight: 600,
+                    fontSize: 18,
+                },
+            },
+        ],
+        series: [
+            {
+                name: "访问来源",
+                type: "pie", //环形图的type和饼图相同
+                radius: ["55%", "65%"], //饼图的半径，第一个为内半径，第二个为外半径
+                avoidLabelOverlap: false,
+                hoverAnimation: false,
+                color: ["#020819", "#35bcc9"],
+                left: "-20%",
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "50",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 0, name: ""},
+                    {value: 80, name: ""},
+                ],
+            },
+            {
+                name: "访问来源",
+                type: "pie", //环形图的type和饼图相同
+                radius: ["79%", "79%"], //饼图的半径，第一个为内半径，第二个为外半径
+                avoidLabelOverlap: false,
+                color: ["#020819", "#020819"],
+                hoverAnimation: false,
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 0},
+                    {
+                        value: 80,
+                        itemStyle: {
+                            color: "#020819",
+                            borderColor: "#35bcc9",
+                            borderWidth: 1,
+                            borderType: "dashed",
+                        },
+                    },
+                ],
+            },
+        ],
+    };
+
+    ghProject.setOption(ghProjectOption);
+
+    // dgTestTable
+
+    var dgTestTable = echarts.init(document.getElementById("dgTestTable"));
+    dgTestTableOption = {
+        title: {
+            show: true,
+            text: "定型试验",
+            right: "0",
+            y: "10",
+            textStyle: {
+                color: "#68becf",
+                fontSize: 14,
+            },
+        },
+        tooltip: {
+            //提示框，可以在全局也可以在
+            trigger: "item", //提示框的样式
+            formatter: "{a} <br/>{b}: {c} ({d}%)",
+            color: "#fff", //提示框的背景色
+            textStyle: {
+                //提示的字体样式
+                color: "black",
+            },
+        },
+        legend: {
+            //图例
+            orient: "vertical", //图例的布局，竖直    horizontal为水平
+            // x: 'right',//图例显示在右边
+            y: "center",
+            right: "0%",
+            itemWidth: 10,
+            itemHeight: 10,
+            align: "left",
+            data: ["新品", "报废品", "待维修"],
+            textStyle: {
+                //图例文字的样式
+                color: "#acaeaf", //文字颜色
+                fontSize: 12, //文字大小
+            },
+        },
+        series: [
+            {
+                name: "新品",
+                type: "pie", //环形图的type和饼图相同
+                radius: ["79%", "80%"], //饼图的半径，第一个为内半径，第二个为外半径
+                center: ["38%", "50%"],
+                clockwise: false,
+                // startAngle: 20,
+                avoidLabelOverlap: false,
+                color: ["#2698e6", "#5a8562", "#b7b04d", "#d5694c"],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "20",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 335, name: "新品"},
+                    {value: 310, name: "报废品"},
+                    {
+                        value: 234,
+                        name: "待维修",
+                        label: {
+                            normal: {
+                                //正常的样式
+                                show: true,
+                                position: "center",
+                                formatter: "各状态合同\r\n占比",
+                                textStyle: {
+                                    fontSize: "12",
+                                    color: "#acaeaf",
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            {
+                name: "新品",
+                type: "pie", //环形图的type和饼图相同
+                radius: ["55%", "65%"], //饼图的半径，第一个为内半径，第二个为外半径
+                center: ["38%", "50%"],
+                clockwise: false,
+                avoidLabelOverlap: false,
+                color: ["#2698e6", "#5a8562", "#b7b04d", "#d5694c"],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 335, name: "新品"},
+                    {value: 310, name: "报废品"},
+                    {value: 234, name: "待维修"},
+                    {value: 135, name: "赠品"},
+                ],
+            },
+            {
+                name: "新品",
+                type: "pie", //环形图的type和饼图相同
+                radius: ["49%", "50%"], //饼图的半径，第一个为内半径，第二个为外半径
+                center: ["38%", "50%"],
+                clockwise: false,
+                avoidLabelOverlap: false,
+                color: ["#2698e6", "#5a8562", "#b7b04d", "#d5694c"],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "50",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 335, name: "新品"},
+                    {value: 310, name: "报废品"},
+                    {value: 234, name: "待维修"},
+                    {value: 135, name: "赠品"},
+                ],
+            },
+        ],
+    };
+    dgTestTable.setOption(dgTestTableOption);
+
+    // 地图 start
+    armyMap = echarts.init(document.getElementById("armyMap"));
+    //中国地图
+    optionChinaMap = {
+        tooltip: {
+            trigger: "item",
+            show: false,
+        },
+        visualMap: {
+            //颜色的设置  dataRange
+            show: false,
+            textStyle: {color: "#fff"},
+            x: "left",
+            y: "bottom",
+            splitList: [
+                {start: 1500},
+                {start: 900, end: 1500},
+                {start: 310, end: 1000},
+                {start: 200, end: 300},
+                {start: 50, end: 200},
+                {start: 0, end: 50},
+            ],
+            color: [
+                "#134176",
+                "#2a5e89",
+                "#37587a",
+                "#146d9d",
+                "#2a5e89",
+                "#146d9d",
+            ],
+        },
+        roamController: {
+            //控制地图的上下左右放大缩小
+            show: true,
+            x: "right",
+            mapTypeControl: {
+                china: true,
+            },
+        },
+        series: [
+            {
+                // name: '全国数据',
+                type: "map",
+                mapType: "china",
+                zoom: 1.1,
+                roam: false, //是否开启鼠标缩放和平移漫游
+                itemStyle: {
+                    //地图区域的多边形 图形样式
+                    normal: {
+                        //是图形在默认状态下的样式
+                        label: {
+                            show: false,
+                            textStyle: {color: "rgb(249, 249, 249)"},
+                        },
+                    },
+                    emphasis: {
+                        //是图形在高亮状态下的样式,比如在鼠标悬浮或者图例联动高亮时
+                        label: {show: false},
+                    },
+                },
+                top: "5%", //组件距离容器的距离
+                data: [
+                    {name: "北京", value: 2000},
+                    {name: "天津", value: 500},
+                    {name: "上海", value: 500},
+                    {name: "重庆", value: 500},
+                    {name: "河北", value: 300},
+                    {name: "河南", value: 300},
+                    {name: "云南", value: 100},
+                    {name: "辽宁", value: 500},
+                    {name: "黑龙江", value: 500},
+                    {name: "湖南", value: 100},
+                    {name: "安徽", value: 500},
+                    {name: "山东", value: 300},
+                    {name: "新疆", value: 2000},
+                    {name: "江苏", value: 500},
+                    {name: "浙江", value: 500},
+                    {name: "江西", value: 500},
+                    {name: "湖北", value: 100},
+                    {name: "广西", value: 100},
+                    {name: "甘肃", value: 1500},
+                    {name: "山西", value: 300},
+                    {name: "内蒙古", value: 500},
+                    {name: "陕西", value: 1500},
+                    {name: "吉林", value: 500},
+                    {name: "福建", value: 500},
+                    {name: "贵州", value: 100},
+                    {name: "广东", value: 100},
+                    {name: "青海", value: 1500},
+                    {name: "西藏", value: 2000},
+                    {name: "四川", value: 1500},
+                    {name: "宁夏", value: 100},
+                    {name: "海南", value: 100},
+                    {name: "台湾", value: 500},
+                    {name: "香港", value: 100},
+                    {name: "澳门", value: 100},
+                ],
+            },
+        ],
+    };
+
+    armyMap.setOption(optionChinaMap, true);
+    // 地图 end
+
+    var armyTable = echarts.init(document.getElementById("armyTable"));
+    armyTableOption = {
+        color: ["#1d7b4e", "#1d487f", "#28c272", "#e2ca3c"],
+        grid: {
+            top: 0,
+            left: 100,
+            bottom: 30,
+            right: "5%",
+        },
+        xAxis: {
+            type: "value",
+            axisLabel: {
+                formatter: "{value}",
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: ["rgba(255,255,255,.1)"],
+                },
+            },
+            axisLabel: {
+                margin: 10,
+                textStyle: {
+                    color: "#bfbfbf",
+                    fontSize: 13,
+                },
+            },
+            axisLine: {
+                lineStyle: {
+                    color: "#1a5092",
+                    width: 1,
+                },
+            },
+            axisTick: false,
+        },
+        yAxis: {
+            type: "category",
+            inverse: true,
+            data: [
+                {% for i in update_company_rankings_k %}
+                    "{{ i }}",
+                {% endfor %}
+            ],
+            axisLabel: {
+                margin: 10,
+                textStyle: {
+                    color: "#bfbfbf",
+                    fontSize: 13,
+                },
+            },
+            axisLine: {
+                lineStyle: {
+                    color: "#1a5092",
+                    width: 1,
+                },
+            },
+            axisTick: false,
+        },
+
+        series: [
+            {
+                type: "bar",
+                data: [
+                    {% for i in update_company_rankings_v %}
+                        "{{ i }}",
+                    {% endfor %}
+                ],
+                barWidth: 10,
+                label: {
+                    show: true,
+                    position: "right",
+                },
+                markPoint: {
+                    symbolSize: 1,
+                    symbolOffset: [0, "50%"],
+                    label: {
+                        formatter: "{a|{a}\n}{b|{b} }{c|{c}}",
+                        backgroundColor: "rgb(242,242,242)",
+                        borderColor: "#aaa",
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        padding: [4, 10],
+                        lineHeight: 26,
+                        position: "right",
+                        distance: 20,
+                        rich: {
+                            a: {
+                                align: "center",
+                                color: "#fff",
+                                fontSize: 18,
+                                textShadowBlur: 2,
+                                textShadowColor: "#000",
+                                textShadowOffsetX: 0,
+                                textShadowOffsetY: 1,
+                                textBorderColor: "#333",
+                                textBorderWidth: 2,
+                            },
+                            b: {
+                                color: "#333",
+                            },
+                            c: {
+                                color: "#ff8811",
+                                textBorderColor: "#000",
+                                textBorderWidth: 1,
+                                fontSize: 22,
+                            },
+                        },
+                    },
+                },
+            },
+        ],
+    };
+
+    armyTable.setOption(armyTableOption);
+
+    var ghTable = echarts.init(document.getElementById("ghTable"));
+    ghTableOption = {
+        grid: {
+            width: 300,
+            left: 110,
+            bottom: "5%",
+            top: 20,
+        },
+        xAxis: {
+            type: "value",
+            axisLabel: {
+                show: false,
+                margin: 10,
+                textStyle: {
+                    color: "#9b9c9e",
+                    fontSize: 13,
+                },
+            },
+            splitLine: {
+                show: false,
+                lineStyle: {
+                    type: "dashed",
+                    color: ["rgba(255,255,255,.1)"],
+                },
+            },
+            axisLine: {
+                margin: 10,
+                lineStyle: {
+                    color: "#1a5092",
+                    width: 1,
+                },
+            },
+            axisTick: false,
+        },
+        yAxis: {
+            type: "category",
+            inverse: true,
+            data: [
+                {% for i in download_company_rankings_k %}
+                    "{{ i }}",
+                {% endfor %}
+            ],
+            axisLabel: {
+                margin: 10,
+                textStyle: {
+                    color: "#9b9c9e",
+                    fontSize: 13,
+                },
+            },
+            axisLine: {
+                lineStyle: {
+                    color: "#1a5092",
+                    width: 1,
+                },
+            },
+            axisTick: false,
+        },
+        series: [
+            {
+                type: "bar",
+                data: [
+                    {% for i in download_company_rankings_v %}
+                        {{ i }},
+                    {% endfor %}
+                ],
+                barWidth: 10,
+                label: {
+                    show: true,
+                    position: "right",
+                    textBorderWidth: 2,
+                },
+                itemStyle: {
+                    normal: {
+                        // color: ['#3e6fa5', '#c38024', '#96b225', '#e2cc3d'],
+                        color: function (params) {
+                            // build a color map as your need.
+                            // 在这里面写好函数 根据条件返回对应的颜色就可以
+                            console.log(params);
+                            var colorList = ["#0b81d7", "#1c8f85", "#0885d9", "#1d958b"];
+                            return colorList[params.dataIndex];
+                        },
+                    },
+                },
+            },
+        ],
+    };
+
+    ghTable.setOption(ghTableOption);
+
+    var flyLeftNum = echarts.init(document.getElementById("flyLeftNum"));
+    flyLeftNumOption = {
+        series: [
+            {
+                type: "pie", //环形图的type和饼图相同
+                radius: ["55%", "65%"], //饼图的半径，第一个为内半径，第二个为外半径
+                avoidLabelOverlap: false,
+                hoverAnimation: false,
+                startAngle: 30,
+                color: ["#010510", "#35bcc9"],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: true,
+                        position: "center",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "50",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 10, name: ""},
+                    {value: 90, name: ""},
+                ],
+            },
+            {
+                type: "pie", //环形图的type和饼图相同
+                radius: ["43%", "53%"], //饼图的半径，第一个为内半径，第二个为外半径
+                avoidLabelOverlap: false,
+                color: ["#010510", "#35bcc9"],
+                hoverAnimation: false,
+                startAngle: 30,
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "12",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 10},
+                    {
+                        value: 90,
+                        label: {
+                            normal: {
+                                //正常的样式
+                                show: true,
+                                position: "center",
+                                formatter: "{d}%",
+                                textStyle: {
+                                    fontSize: "18",
+                                    color: "#fff",
+                                    fontWeight: 600,
+                                    fontFamily: "YourWebFontName",
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    };
+    flyLeftNum.setOption(flyLeftNumOption);
+
+    var flyRightNum = echarts.init(document.getElementById("flyRightNum"));
+    flyRightNumOption = {
+        // title: {
+        //     text: '维修计划任务执行率',
+        //     show: true,
+        //     textStyle: {
+        //         color: '#37b1e5',
+        //         italic: 'italic',
+        //         fontWeight: 'normal',
+        //         fontSize: 14
+        //     },
+        //     left: 'center'
+        // },
+        series: [
+            {
+                type: "pie", //环形图的type和饼图相同
+                radius: ["55%", "65%"], //饼图的半径，第一个为内半径，第二个为外半径
+                avoidLabelOverlap: false,
+                hoverAnimation: false,
+                startAngle: 30,
+                color: ["#010510", "#35bcc9"],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: true,
+                        position: "center",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "50",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 10, name: ""},
+                    {value: 90, name: ""},
+                ],
+            },
+            {
+                type: "pie", //环形图的type和饼图相同
+                radius: ["43%", "53%"], //饼图的半径，第一个为内半径，第二个为外半径
+                avoidLabelOverlap: false,
+                color: ["#010510", "#35bcc9"],
+                hoverAnimation: false,
+                startAngle: 30,
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "12",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 10},
+                    {
+                        value: 90,
+                        label: {
+                            normal: {
+                                //正常的样式
+                                show: true,
+                                position: "center",
+                                formatter: "{d}%",
+                                textStyle: {
+                                    fontSize: "18",
+                                    color: "#fff",
+                                    fontWeight: 600,
+                                    fontFamily: "YourWebFontName",
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ],
+    };
+    flyRightNum.setOption(flyRightNumOption);
+
+    let aviation = echarts.init(document.getElementById("aviation"));
+    data = Math.round(89);
+    var assistdata = [];
+    for (let i = 0; i < 23; i++) {
+        //这里可以通过更改数值进行设置格子宽度，数值越小格子越宽
+        assistdata.push({
+            name: "1",
+            value: 1,
+        });
+    }
+    var aviationOption = {
+        color: ["#00101d", "#FF8033"],
+        legend: {
+            orient: "vertical",
+            x: "left",
+            show: false,
+        },
+        tooltip: {
+            trigger: "item",
+            formatter: "{d}%",
+            show: false,
+        },
+        graphic: [
+            {
+                type: "text",
+                left: "center",
+                top: "200px",
+                z: 2,
+                zlevel: 100,
+                style: {
+                    fill: "#6AC5FC",
+                    font: "bold 14px Microsoft YaHei",
+                    fontSize: "30px",
+                },
+            },
+            {
+                type: "text",
+                // position: 'center',
+                left: "center",
+                top: "center",
+                // top: (this.width > 603) ? (this.width > 700 ? '80px' : '52px') : '52px',
+                z: 2,
+                zlevel: 100,
+                style: {
+                    text: data + "%",
+                    fill: "#fff",
+                    fontWeight: 600,
+                    fontSize: 18,
+                },
+            },
+        ],
+        series: [
+            {
+                type: "pie", //环形图的type和饼图相同
+                radius: ["77%", "80%"], //饼图的半径，第一个为内半径，第二个为外半径
+                center: ["50%", "50%"],
+                // color: [],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "20",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {
+                        name: "未使用",
+                        value: 100,
+                        itemStyle: {
+                            color: "#274781",
+                        },
+                    },
+                ],
+            },
+            {
+                type: "pie",
+                silent: true,
+                radius:
+                    this.width > 603
+                        ? this.width > 700
+                        ? ["56%", "70%"]
+                        : ["66%", "85%"]
+                        : ["45%", "65%"],
+                center:
+                    this.width > 603
+                        ? this.width > 700
+                        ? ["50%", "45%"]
+                        : ["50%", "50%"]
+                        : ["50%", "50%"],
+                avoidLabelOverlap: false,
+                color: ["#176da9"],
+                hoverAnimation: false,
+                label: {
+                    show: false,
+                },
+                labelLine: {
+                    show: false,
+                },
+                itemStyle: {
+                    show: false,
+                    borderColor: "#020819",
+                    borderWidth: this.width > 760 ? 4 : 2,
+                },
+                data: assistdata,
+            },
+            {
+                name: "百分比",
+                type: "pie",
+                silent: true,
+                radius:
+                    this.width > 603
+                        ? this.width > 700
+                        ? ["56%", "70%"]
+                        : ["66%", "85%"]
+                        : ["45%", "65%"],
+                center:
+                    this.width > 603
+                        ? this.width > 700
+                        ? ["50%", "45%"]
+                        : ["50%", "50%"]
+                        : ["50%", "50%"],
+                avoidLabelOverlap: false,
+                color: ["transparent", "#020819"],
+                hoverAnimation: false,
+                label: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {
+                        name: "使用",
+                        value: data,
+                    },
+                    {
+                        name: "未使用",
+                        value: 140 - data,
+                    },
+                ],
+            },
+        ],
+    };
+
+    aviation.setOption(aviationOption);
+
+    var peopleEducationBg = echarts.init(
+        document.getElementById("peopleEducationBg")
+    );
+    peopleEducationBgOption = {
+        title: {
+            show: true,
+            text: "人才学历分布图",
+            right: "center",
+            y: "10",
+            textStyle: {
+                color: "#bfbfbf",
+                fontSize: 16,
+                fontWeight: 400,
+            },
+        },
+        tooltip: {
+            //提示框，可以在全局也可以在
+            trigger: "item", //提示框的样式
+            formatter: "{a} <br/>{b}: {c} ({d}%)",
+            color: "#fff", //提示框的背景色
+            textStyle: {
+                //提示的字体样式
+                color: "black",
+            },
+        },
+        legend: {
+            //图例
+            orient: "horizontal", //图例的布局，竖直    horizontal为水平
+            x: "center", //图例显示在右边
+            bottom: "10",
+            right: "0%",
+            itemWidth: 10,
+            itemHeight: 10,
+            itemGap: 10,
+            align: "left",
+            data: this.legend,
+            padding: 5,
+            width: "60%",
+            textStyle: {
+                //图例文字的样式
+                color: "#acaeaf", //文字颜色
+                fontSize: 12, //文字大小
+            },
+        },
+        series: [
+            {
+                name: "新品",
+                type: "pie", //环形图的type和饼图相同
+                radius: ["50%", "50%"], //饼图的半径，第一个为内半径，第二个为外半径
+                avoidLabelOverlap: false,
+                color: ["#020819", "#020819"],
+                hoverAnimation: false,
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 0},
+                    {
+                        value: 80,
+                        itemStyle: {
+                            color: "#020819",
+                            borderColor: "#35bcc9",
+                            borderWidth: 1,
+                            borderType: "dashed",
+                        },
+                    },
+                ],
+            },
+            {
+                type: "pie", //环形图的type和饼图相同
+                radius: ["35%", "45%"], //饼图的半径，第一个为内半径，第二个为外半径
+                center: ["50%", "50%"],
+                clockwise: false,
+                avoidLabelOverlap: false,
+                color: ["#b7b04d", "#5a8562", "#2698e6", "#d5694c"],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 335, name: "博士"},
+                    {value: 310, name: "硕士"},
+                    {value: 234, name: "本科"},
+                    {value: 135, name: "专科"},
+                ],
+            },
+            {
+                type: "pie", //环形图的type和饼图相同
+                radius: ["31%", "32%"], //饼图的半径，第一个为内半径，第二个为外半径
+                center: ["50%", "50%"],
+                clockwise: false,
+                avoidLabelOverlap: false,
+                color: ["#b7b04d", "#5a8562", "#2698e6", "#d5694c"],
+                label: {
+                    normal: {
+                        //正常的样式
+                        show: false,
+                        position: "left",
+                    },
+                    emphasis: {
+                        //选中时候的样式
+                        show: false,
+                        textStyle: {
+                            fontSize: "50",
+                            fontWeight: "bold",
+                        },
+                    },
+                }, //提示文字
+                labelLine: {
+                    normal: {
+                        show: false,
+                    },
+                },
+                data: [
+                    {value: 335, name: "博士"},
+                    {value: 310, name: "硕士"},
+                    {value: 234, name: "本科"},
+                    {value: 135, name: "专科"},
+                ],
+            },
+        ],
+    };
+    peopleEducationBg.setOption(peopleEducationBgOption);
+</script>
+</body>
+</html>

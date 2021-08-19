@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传测试页面</title>
+</head>
+<body>
+    <form action="{% url 'userhe:resume_update' %}" method="post" enctype='multipart/form-data'>
+        {% csrf_token %}
+        <input type="text" name="uid" value="f7a4b292d53a11eaac66185680724ca4">
+        <input type="file" name="files" value="" multiple=true>
+        <input type="submit">
+    </form>
+</body>
+</html>

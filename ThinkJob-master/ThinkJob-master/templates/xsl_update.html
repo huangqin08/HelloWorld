@@ -1,0 +1,343 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" crossorigin="anonymous">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="{% static 'js/bootstrap.min.js' %}" crossorigin="anonymous"></script>
+    <style>
+        body {
+            padding: 0;
+            border: 0;
+            margin: 0;
+        }
+
+        .left_background {
+            width: 54.3%;
+            height: 1080px;
+            background-image: url('{% static 'assets/bj.png' %}');
+            background-repeat: no-repeat;
+            float: left;
+            position: relative;
+        }
+
+        .left_background > img {
+            width: 343px;
+            height: 298px;
+            position: inherit;
+            left: 311px;
+            top: 313px;
+        }
+
+        .left_background > div {
+            position: inherit;
+            top: 346px;
+        }
+
+        .left_background > div > span {
+            display: block;
+            text-align: center;
+            font-size: 28px;
+            color: #fff;
+        }
+
+        .right_date {
+            width: 45.7%;
+            height: 1080px;
+            float: left
+        }
+
+        .fluid_logo {
+            width: 29px;
+            height: 29px;
+            display: inline-block;
+            background-image: url('{% static 'assets/Superfluid logo.png' %}');
+            vertical-align: middle;
+        }
+
+        .logo_font {
+            font-weight: 550;
+            font-size: 28px;
+            color: #333333;
+            text-align: center;
+            margin: auto;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 14.5px;
+        }
+
+        .icon_text {
+            margin-top: 224px;
+            margin-left: 113px;
+        }
+
+        .hello_message {
+            margin-left: 114px;
+            margin-top: 61px;
+            font-size: 30px;
+        {#width: 438px;#}
+        }
+
+        .hello_message > label {
+            font-size: 18px;
+            font-weight: unset;
+        }
+
+        .username {
+            margin-bottom: 24px;
+            width: 438px;
+            height: 55px;
+            margin-top: 24px;
+            font-size: 18px;
+        }
+
+        .password {
+            width: 438px;
+            height: 55px;
+            margin-top: 30px;
+            font-size: 18px;
+        }
+
+        .magic-checkbox {
+            position: absolute;
+            display: none;
+        }
+
+        .magic-checkbox[disabled] {
+            cursor: not-allowed;
+        }
+
+        .magic-checkbox + label {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            vertical-align: middle;
+            margin: auto;
+            font-weight: initial;
+        }
+
+        .magic-checkbox + label:hover:before {
+            animation-duration: 0.4s;
+            animation-fill-mode: both;
+            animation-name: hover-color;
+        }
+
+        .magic-checkbox + label:before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            content: '';
+            border: 1px solid #c0c0c0;
+        }
+
+        .magic-checkbox + label:after {
+            position: absolute;
+            display: none;
+            content: '';
+        }
+
+        .magic-checkbox[disabled] + label {
+            cursor: not-allowed;
+            color: #e4e4e4;
+        }
+
+        .magic-checkbox[disabled] + label:hover,
+        .magic-checkbox[disabled] + label:before,
+        .magic-checkbox[disabled] + label:after {
+            cursor: not-allowed;
+        }
+
+        .magic-checkbox[disabled] + label:hover:before {
+            border: 1px solid #e4e4e4;
+            animation-name: none;
+        }
+
+        .magic-checkbox:checked + label:before {
+            animation-name: none;
+        }
+
+        .magic-checkbox:checked + label:after {
+            display: block;
+        }
+
+        .magic-checkbox + label:before {
+            border-radius: 3px;
+        }
+
+        .magic-checkbox + label:after {
+            top: 2px;
+            left: 7px;
+            box-sizing: border-box;
+            width: 9px;
+            height: 16px;
+            transform: rotate(45deg);
+            border-width: 2px;
+            border-style: solid;
+            border-color: #fff;
+            border-top: 0;
+            border-left: 0;
+        }
+
+        .magic-checkbox:checked + label:before {
+            border: #3e97eb;
+            background: #3e97eb;
+        }
+
+        .magic-checkbox:checked[disabled] + label:before {
+            border: #c9e2f9;
+            background: #c9e2f9;
+        }
+
+        .wpassword {
+            float: right;
+        }
+
+        .check_box {
+            font-size: 18px;
+            font-weight: normal;
+            color: #666666;
+            margin-top: 23px;
+        }
+
+        .button_bt {
+            margin-top: 43px;
+        }
+
+        .button_info {
+            background: #5dd5c8;
+            border-color: #5dd5c8;
+            width: 157px;
+            height: 55px;
+            font-size: 20px;
+            margin-right: 22px;
+        }
+
+        .button_default {
+            border-color: #5dd5c8;
+            color: #5dd5c8;
+            width: 157px;
+            height: 55px;
+            font-size: 20px;
+        }
+
+        .tis_message {
+            margin-top: 25px;
+        }
+
+        .tis_message > span {
+            font-size: 18px;
+            color: #999;
+        }
+
+        .phone_message {
+            margin-top: 30px;
+        }
+
+        .phone_message > span {
+            font-size: 20px;
+            color: #5DD5C8;
+        }
+
+        .scroll_table{
+            overflow: auto;
+            height: 850px;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%">
+    <div class="left_background">
+        <img src="{% static 'assets/tu.png' %}">
+        <div>
+            <span>ThinkJob  AI 基于人工智能简历大数据平台</span>
+            <span>专注于IT产业的技术性人才招聘</span>
+        </div>
+    </div>
+    <div class="right_date">
+        <div class="icon_text">
+            <div class="fluid_logo"></div>
+            <span class="logo_font">欢迎使用XSL导入功能</span>
+        </div>
+        <div class="hello_message">
+            <span id="msg">{{ msg | default:'请上传需要解析的数据' }}</span>
+            <br/><span id="sc" data-toggle="modal" data-target="#myModal"
+                       style="cursor: pointer;{{ sc | default:'display:none;' }}"><span>{{ date | default:0 }}</span>成功：<span
+                style="color: chartreuse">{{ date_success| default:0 }}</span>条，失败：<span
+                style="color: red">{{ date_error| default:0 }}</span>条</span>
+
+            <form id="xsl_up" action="{% url 'system:XLS_update' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- 真正的文件上传表单 -->
+                <input type="file" id="thisfile" name="file_xls" style="display: none"/>
+
+                <div class="input-append">
+                    <!-- 用于展示上传文件名的表单 -->
+                    <input class="form-control username" aria-describedby="basic-addon1" id="showname"
+                           class="input-large" type="text">
+                    <button type="button" class="btn btn-info button_info" onclick="makeThisfile()" id="browse">浏览文件
+                    </button>
+                    <button onclick="tijiao()" type="button" class="btn btn-info button_info">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid text-center">
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    解析结果展示
+                </h4>
+            </div>
+            <div class="modal-body scroll_table">
+                <table class="table table-striped">
+                    {% for i in error %}
+                       <tr><td>{{ forloop.counter }}</td><td class="text-left">{{ i }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal -->
+</div>
+</body>
+<script type="text/javascript">
+    //触发隐藏的file表单
+    function makeThisfile() {
+        $('#thisfile').click();
+    }
+
+    function tijiao() {
+        if ($('#showname').val() == '' | $('#showname').val() == null) {
+            $('#msg').html('请选择一个要导入的数据')
+            $('#sc').css('display', 'none')
+            return;
+        }
+        $('#xsl_up').submit()
+    }
+
+    //file表单选中文件时,让file表单的val展示到showname这个展示框
+    $('#thisfile').change(function () {
+        $('#showname').val($(this).val().split('\\')[2])
+    })
+
+</script>
+</html>
